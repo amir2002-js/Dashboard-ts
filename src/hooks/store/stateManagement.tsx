@@ -1,31 +1,22 @@
 import { create } from 'zustand'
-type form = {
-    firstName: string
-    lastName: string
-    goldWeight: string
-    totalAmount: string
-    phoneNumber: string
-    description: string
-}
+import type { userType } from '../../types/types'
+
 
 export type useStoreApi = {
     isShowSidebar: boolean
     toggleIsShow: () => void
-    formData: form
-    setFormData: (t: form) => void
+
+    user: userType
+    setUser: (data: userType) => void
 }
 
 export const useStoreHook = create<useStoreApi>()((set) => ({
     isShowSidebar: false,
     toggleIsShow: () => set((state) => ({ isShowSidebar: !state.isShowSidebar })),
 
-    formData: {
-        firstName: '',
-        lastName: '',
-        goldWeight: '',
-        totalAmount: '',
-        phoneNumber: '',
-        description: '',
-    },
-    setFormData: (newVal) => set(() => ({ formData: newVal })),
+    user: { username: '', email: '', role: '' },
+    setUser: (data) =>
+        set(() => ({
+            user: data,
+        })),
 }))

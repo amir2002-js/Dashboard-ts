@@ -33,7 +33,7 @@ export default function Form() {
     }
 
     if (getRefreshToken()) {
-        navigation('/')
+        // navigation('/')
     }
 
     return (

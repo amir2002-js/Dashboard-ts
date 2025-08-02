@@ -123,6 +123,6 @@
     }
 
     button {
-        @apply hover:cursor-pointer active:scale-[1.01] transition-all duration-300;
+        @apply hover:cursor-pointer active:scale-[1.01] transition-all duration-300 outline-0;
     }
 }

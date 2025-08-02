@@ -10,8 +10,7 @@ import InputPrime from '../../components/ui/InputPrime'
 
 import clsx from 'clsx'
 import { PiCaretDownThin, PiCheckThin } from 'react-icons/pi'
-import { useState } from 'react'
-import { useStoreHook } from '../../hooks/store/stateManagement'
+
 
 type formTp = {
     setQuery: (t: string) => void
@@ -25,106 +24,43 @@ type formTp = {
 }
 
 export default function Form({ setSelected, selected, setQuery, filteredPeople }: formTp) {
-    const [errors, setErrors] = useState<{ [key: string]: string }>({})
-
-    // const [formData, setFormData] = useState({
-    //     firstName: '',
-    //     lastName: '',
-    //     goldWeight: '',
-    //     totalAmount: '',
-    //     phoneNumber: '',
-    //     description: '',
-    // })
-
-    const formData = useStoreHook((s) => s.formData)
-    const setFormData = useStoreHook((s) => s.setFormData)
-
-    const validate = (): { [key: string]: string } => {
-        const newErrors: { [key: string]: string } = {}
-
-        if (!formData.firstName.trim()) newErrors.firstName = 'نام الزامی است.'
-        if (!formData.lastName.trim()) newErrors.lastName = 'نام خانوادگی الزامی است.'
-        if (!formData.goldWeight) newErrors.goldWeight = 'وزن طلا الزامی است.'
-        else if (isNaN(Number(formData.goldWeight)) || Number(formData.goldWeight) <= 0)
-            newErrors.goldWeight = 'لطفاً یک عدد معتبر و مثبت وارد کنید.'
-        if (!formData.totalAmount) newErrors.totalAmount = 'مبلغ کل الزامی است.'
-        else if (isNaN(Number(formData.totalAmount)) || Number(formData.totalAmount) <= 0)
-            newErrors.totalAmount = 'لطفاً یک عدد معتبر و مثبت وارد کنید.'
-        if (!formData.phoneNumber) newErrors.phoneNumber = 'شماره تماس الزامی است.'
-        else if (!/^09\d{9}$/.test(formData.phoneNumber))
-            newErrors.phoneNumber = 'فرمت شماره تماس صحیح نیست (مثال: 09123456789).'
-
-        return newErrors
-    }
-
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        const { name, value } = e.target
-        setFormData({
-            ...formData,
-            [name]: value,
-        })
-    }
-
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault()
-        const validationErrors = validate()
-        setErrors(validationErrors)
-
-        if (Object.keys(validationErrors).length === 0) {
-            console.log('داده‌های فرم معتبر است:', formData)
-            alert('فرم با موفقیت ارسال شد!')
-            // اینجا داده‌ها را به API ارسال کنید
-        } else {
-            console.log('خطاهای اعتبارسنجی:', validationErrors)
-        }
-    }
 
     return (
         <form
             className="grid grid-cols-2 gap-6 max-sm:grid-cols-1 max-sm:px-3"
             dir="rtl"
-            onSubmit={handleSubmit}
+            // onSubmit={}
             noValidate
         >
             <InputPrime
                 type="text"
                 name="firstName"
                 placeholder="نام"
-                value={formData.firstName}
-                onChange={handleChange}
-                error={errors.firstName}
+                // value={formData.firstName}
+                // onChange={handleChange}
+                // error={errors.firstName}
             />
             <InputPrime
                 type="text"
                 name="lastName"
                 placeholder="نام خانوادگی"
-                value={formData.lastName}
-                onChange={handleChange}
-                error={errors.lastName}
             />
             <InputPrime
                 placeholder="شماره تماس"
                 type="tel" // type 'tel' برای شماره تماس مناسب‌تر است
                 name="phoneNumber"
-                value={formData.phoneNumber}
-                onChange={handleChange}
-                error={errors.phoneNumber}
+
             />
             <InputPrime
                 type="number"
                 name="totalAmount"
                 placeholder="مبلغ کل"
-                value={formData.totalAmount}
-                onChange={handleChange}
-                error={errors.totalAmount}
+
             />
             <InputPrime
                 type="number"
                 name="goldWeight"
                 placeholder="وزن طلا (گرم)"
-                value={formData.goldWeight}
-                onChange={handleChange}
-                error={errors.goldWeight}
             />
             {/* select box */}
             <div className="font-dana">
@@ -180,9 +116,6 @@ export default function Form({ setSelected, selected, setQuery, filteredPeople }
                     type="textarea" // از نوع جدید textarea استفاده می‌کنیم
                     name="description"
                     placeholder="توضیحات تکمیلی"
-                    value={formData.description}
-                    onChange={handleChange}
-                    error={errors.description}
                 />
             </div>
             <Button

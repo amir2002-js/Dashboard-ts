@@ -5,29 +5,17 @@ type InputProps = {
     type: 'text' | 'password' | 'number' | 'tel' | 'textarea' // انواع جدید اضافه شد
     placeholder: string
     name: string // پراپرتی name اضافه شد
-    value: string | number // پراپرتی value اضافه شد
-    onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void // پراپرتی onChange اضافه شد
-    error?: string // پراپرتی error (اختیاری) اضافه شد
 }
 
 export default function InputPrime({
     type,
     placeholder,
     name,
-    value,
-    onChange,
-    error,
 }: InputProps) {
     const [showPass, setShowPass] = useState(false)
 
     function toggleState() {
         setShowPass((p) => !p)
-    }
-
-    const errorStyle: React.CSSProperties = {
-        color: 'red',
-        fontSize: '0.8rem',
-        marginTop: '4px',
     }
 
     return (
@@ -48,8 +36,7 @@ export default function InputPrime({
                         type={type === 'password' ? (showPass ? 'text' : type) : type}
                         className="w-full text-xs font-dana outline-0"
                         name={name}
-                        value={value}
-                        onChange={onChange}
+
                     />
                     {type === 'password' &&
                         (showPass ? (
@@ -63,7 +50,6 @@ export default function InputPrime({
                         ))}
                 </label>
             )}
-            {error && <p style={errorStyle}>{error}</p>}
         </div>
     )
 }
