@@ -2,7 +2,13 @@ import { Dialog, DialogPanel, DialogTitle } from '@headlessui/react'
 import Button from './buttons/Button'
 import { useState } from 'react'
 
-export default function Card({username , createAt}) {
+type UserCardType = { username: string; createAt: string; email: string; role: string }
+
+export default function UserCard({ username, createAt, email, role }: UserCardType) {
+    const date = new Date(createAt)
+
+    const shamsiDate = new Intl.DateTimeFormat('fa-IR').format(date)
+
     const [isOpen, setIsOpen] = useState(false)
 
     function open() {
@@ -13,10 +19,12 @@ export default function Card({username , createAt}) {
         setIsOpen(false)
     }
 
+    const roleString = role == '0' ? 'کاربر عادی' : role == '1' ? 'ادمین' : ''
+
     return (
         <>
             <div
-                className=" bg-background-secondary-light hover:-translate-y-2 rounded-lg transition-all duration-300 flex flex-col items-stretch justify-stretch dark:bg-background-secondary-dark max-w-80 min-w-60 p-4 shadow-lg"
+                className=" bg-background-secondary-light w-full hover:-translate-y-2 rounded-lg transition-all duration-300 flex flex-col items-stretch justify-stretch dark:bg-background-secondary-dark p-4 shadow-lg"
                 dir="rtl"
             >
                 <table>
@@ -27,31 +35,41 @@ export default function Card({username , createAt}) {
                         </tr>
 
                         <tr className="m-4">
-                            <td className="text-[10px] ml-5">تاریخ : </td>
-                            <td className="font-dana">{createAt}</td>
+                            <td className="text-[10px] ml-5">تاریخ ایجاد حساب: </td>
+                            <td className="font-dana">{shamsiDate}</td>
                         </tr>
 
                         <tr className="m-4">
-                            <td className="text-[10px] ml-5">مبلغ : </td>
-                            <td className="font-dana">{} تومان</td>
+                            <td className="text-[10px] ml-5"> نقش : </td>
+                            <td className="font-dana">{roleString}</td>
                         </tr>
 
                         <tr className="m-4">
-                            <td className="text-[10px] ml-5">طلای برده : </td>
-                            <td className="font-dana">{} گرم</td>
-                        </tr>
-
-                        <tr className="m-4">
-                            <td className="text-[10px] ml-5"> مانده : </td>
-                            <td className="font-dana">{} تومان</td>
-                            
+                            <td className="text-[10px] ml-5"> ایمیل : </td>
+                            <td className="font-dana">{email}</td>
                         </tr>
                     </tbody>
                 </table>
-                <div className="*:w-full *:p-3.5">
+                <div className=" flex justify-center items-center gap-4 *:p-3.5 mt-7 mb-2 flex-wrap *:grow">
                     <Button
                         color="primary"
                         text="مشاهده جزییات"
+                        typeBtn="contained"
+                        types="button"
+                        onClick={open}
+                    />
+
+                    <Button
+                        color="success"
+                        text="ویرایش"
+                        typeBtn="contained"
+                        types="button"
+                        onClick={open}
+                    />
+
+                    <Button
+                        color="error"
+                        text="حذف کاربر"
                         typeBtn="contained"
                         types="button"
                         onClick={open}

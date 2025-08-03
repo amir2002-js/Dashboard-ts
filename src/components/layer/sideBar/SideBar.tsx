@@ -12,6 +12,7 @@ export default function SideBar() {
         { title: 'مشتری ها(خرید)', id: 0, url: '/debtor' },
         { title: 'مشتری ها(فروش)', id: 1, url: '/creditor' },
         { title: 'اضافه کردن مشتری', id: 2, url: '/add-new-customer' },
+        { title: 'مشاهده کاربران', id: 3, url: '/users' },
     ]
 
     useEffect(() => {

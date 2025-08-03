@@ -1,10 +1,14 @@
-import { useMutation, type UseMutationResult } from '@tanstack/react-query'
+import { useMutation, useQuery, type UseMutationResult, type UseQueryResult } from '@tanstack/react-query'
 import { registerService } from '../../APIs/register'
-import type { formData, RegisterResponse } from '../../types/types'
+import type { formData, RegisterResponse, User } from '../../types/types'
 import { toast } from 'sonner'
 import { successFunc } from './funcQuery'
 import { AxiosError } from 'axios'
 import { useStoreHook } from '../store/stateManagement'
+import { getAlluserService } from '../../APIs/getAllusers'
+import { loginService } from '../../APIs/login'
+import { useNavigate } from 'react-router-dom'
+
 
 type ApiError = {
     error: string
@@ -34,12 +38,14 @@ export function useRegister(): UseMutationResult<RegisterResponse, Error, formDa
 
 export function useLogin(): UseMutationResult<RegisterResponse, Error, formData> {
     const setUser = useStoreHook((state) => state.setUser)
+    const navigation = useNavigate()
 
     const mutation = useMutation<RegisterResponse, Error, formData>({
-        mutationFn: (userInfo: formData) => registerService(userInfo),
+        mutationFn: (userInfo: formData) => loginService(userInfo),
         onSuccess: (data) => {
             successFunc(data)
             setUser(data.user)
+            navigation("/")
         },
         onError: (error: AxiosError<ApiError>) => {
             console.log('error', error.response?.data.error)
@@ -53,3 +59,15 @@ export function useLogin(): UseMutationResult<RegisterResponse, Error, formData>
 
     return mutation
 }
+
+
+export function useGetUsers(): UseQueryResult<User[], AxiosError<ApiError>> {
+
+    const query = useQuery<User[], AxiosError<ApiError>> ({
+        queryFn: getAlluserService,
+        queryKey: ["users"],
+    })
+
+    return query
+}
+

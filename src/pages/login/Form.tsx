@@ -4,7 +4,6 @@ import Input from '../../components/ui/Input'
 import Logo from '../../components/ui/Logo'
 import { useForm, type SubmitHandler } from 'react-hook-form'
 import { useLogin } from '../../hooks/query/queries'
-import { getRefreshToken } from '../../cookies/mangae'
 import z from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 
@@ -28,9 +27,6 @@ export default function Form() {
         logingHook.mutate(data)
     }
 
-    if (getRefreshToken()) {
-        navigation('/')
-    }
     return (
         <div
             className="p-5  rounded shadow-lg z-[99] max-w-80 w-full shadow-gray-300 bg-background-secondary-light flex flex-col gap-5"

@@ -17,7 +17,7 @@ export default function Button({
     let className = ''
     switch (color) {
         case 'error':
-            className += ' '
+            className += '  bg-error-main text-error-main border-error-main'
             break
         case 'info':
             className += ' '
@@ -29,7 +29,7 @@ export default function Button({
             className += ' bg-secondary-main text-secondary-main border-secondary-main'
             break
         case 'success':
-            className += ' '
+            className += ' bg-success-main text-success-main border-success-main'
             break
         case 'warning':
             className += ' '

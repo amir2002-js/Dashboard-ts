@@ -5,6 +5,7 @@ import Login from './pages/login/Login'
 import { Dashboard } from './pages/dashboard/Dashboard'
 import AddCustomer from './pages/addCustomer/AddCustomer'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import ShowAllUsers from './pages/showAllUser/ShowAllUsers'
 
 function App() {
     const queryClient = new QueryClient()
@@ -22,6 +23,7 @@ function App() {
                             <Route element={<Dashboard />} path="/debtor" />
                             <Route element={<Dashboard />} path="/creditor" />
                             <Route element={<AddCustomer />} path="/add-new-customer" />
+                            <Route element={<ShowAllUsers />} path="/users" />
                         </Route>
                     </Routes>
                 </BrowserRouter>
