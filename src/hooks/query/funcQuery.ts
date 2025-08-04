@@ -1,6 +1,6 @@
 import { toast } from 'sonner'
 import { setCookie } from '../../cookies/manage'
-import type { RegisterResponse } from '../../types/types'
+import type { RegisterResponse } from '../../typesAndConsts/types'
 
 export function successFunc(data: RegisterResponse) {
     console.log('is success')

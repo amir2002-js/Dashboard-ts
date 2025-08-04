@@ -1,6 +1,5 @@
 import { create } from 'zustand'
-import type { userType } from '../../types/types'
-
+import type { userType } from '../../typesAndConsts/types'
 
 export type useStoreApi = {
     isShowSidebar: boolean

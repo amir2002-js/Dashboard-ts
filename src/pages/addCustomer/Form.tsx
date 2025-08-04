@@ -1,122 +1,104 @@
-import {
-    Button,
-    Combobox,
-    ComboboxButton,
-    ComboboxInput,
-    ComboboxOption,
-    ComboboxOptions,
-} from '@headlessui/react'
+import { Button } from '@headlessui/react'
 import InputPrime from '../../components/ui/InputPrime'
+import SelectBox from './SelectBox'
+import { Controller, useForm, type SubmitHandler } from 'react-hook-form'
+import z from 'zod'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useAddCustomer } from '../../hooks/query/queries'
+import { filteredPeople } from '../../typesAndConsts/consts'
 
-import clsx from 'clsx'
-import { PiCaretDownThin, PiCheckThin } from 'react-icons/pi'
+const zodInputs = z
+    .object({
+        firstName: z.string().min(1, ' وارد کردن نام الزامیست'),
+        lastName: z.string().min(1, ' وارد کردن نام خانوادگی الزامیست'),
+        phoneNumber: z
+            .string()
+            .min(11, 'شماره تماس نامعتبر است')
+            .max(11, 'شماره تماس نامعتبر است')
+            .startsWith('09', 'فرمت شماره تماس صحیح نیست'),
+        totality: z.coerce.number('لطفاً یک عدد معتبر وارد کنید'),
+        weight: z.coerce.number('لطفاً یک عدد معتبر وارد کنید'),
+        description: z.string(),
+        type: z.object({
+            id: z.number(),
+            name: z.string(),
+            typeCustomer: z.string(),
+        }),
+    })
+    .transform((data) => ({
+        ...data,
+        type: data.type.typeCustomer,
+    }))
 
+type Inputs = z.infer<typeof zodInputs>
 
-type formTp = {
-    setQuery: (t: string) => void
-    setSelected: (t: { id: number; name: string; typeCustomer: string }) => void
-    selected: { id: number; name: string; typeCustomer: string }
-    filteredPeople: {
-        id: number
-        name: string
-        typeCustomer: string
-    }[]
-}
+const formFields: { name: keyof Inputs; placeholder: string; type: 'text' | 'tel' | 'number' }[] = [
+    { name: 'firstName', placeholder: 'نام', type: 'text' },
+    { name: 'lastName', placeholder: 'نام خانوادگی', type: 'text' },
+    { name: 'phoneNumber', placeholder: 'شماره تماس', type: 'tel' },
+    { name: 'totality', placeholder: 'مبلغ کل', type: 'number' },
+    { name: 'weight', placeholder: 'وزن طلا (گرم)', type: 'number' },
+]
 
-export default function Form({ setSelected, selected, setQuery, filteredPeople }: formTp) {
+export default function Form() {
+    const {
+        register,
+        handleSubmit,
+        control,
+        formState: { errors },
+    } = useForm({ resolver: zodResolver(zodInputs) })
+    const addCustomerHook = useAddCustomer()
+
+    const onSubmit: SubmitHandler<Inputs> = (data) => {
+        // console.log(data)
+        addCustomerHook.mutate(data)
+    }
 
     return (
         <form
-            className="grid grid-cols-2 gap-6 max-sm:grid-cols-1 max-sm:px-3"
+            className="grid grid-cols-2 gap-6 gap-y-9 max-sm:grid-cols-1 max-sm:px-3"
             dir="rtl"
-            // onSubmit={}
-            noValidate
+            onSubmit={handleSubmit(onSubmit)}
         >
-            <InputPrime
-                type="text"
-                name="firstName"
-                placeholder="نام"
-                // value={formData.firstName}
-                // onChange={handleChange}
-                // error={errors.firstName}
-            />
-            <InputPrime
-                type="text"
-                name="lastName"
-                placeholder="نام خانوادگی"
-            />
-            <InputPrime
-                placeholder="شماره تماس"
-                type="tel" // type 'tel' برای شماره تماس مناسب‌تر است
-                name="phoneNumber"
-
-            />
-            <InputPrime
-                type="number"
-                name="totalAmount"
-                placeholder="مبلغ کل"
-
-            />
-            <InputPrime
-                type="number"
-                name="goldWeight"
-                placeholder="وزن طلا (گرم)"
-            />
-            {/* select box */}
-            <div className="font-dana">
-                <Combobox
-                    value={selected}
-                    onChange={(value) => setSelected(value!)}
-                    onClose={() => setQuery('')}
-                >
-                    <div className="relative text-secondary-dark dark:text-white">
-                        <ComboboxInput
-                            className={clsx(
-                                'w-full h-10 rounded dark:border-none border-2 border-gray-300 bg-white/5 py-1.5 pr-8 pl-3 text-sm/6',
-                                'focus:not-data-focus:outline-none data-focus:outline-2 data-focus:-outline-offset-2 data-focus:outline-white/25',
-                            )}
-                            displayValue={(person: {
-                                id: number
-                                name: string
-                                typeCustomer: string
-                            }) => person.name}
-                            onChange={(event) => setQuery(event.target.value)}
+            {formFields.map((item) => (
+                <div className="relative" key={item.name}>
+                    <label className="w-full border-2 rounded border-gray-300 dark:border-[#5B5774] px-2 py-1 h-10 focus-within:border-main flex relative">
+                        <InputPrime
+                            type={item.type}
+                            placeholder={item.placeholder}
+                            {...register(item.name, { required: 'وارد کردن این فیلد الزامیست' })}
                         />
-                        <ComboboxButton className="group absolute inset-y-0 right-0 px-2.5">
-                            <PiCaretDownThin className="size-4" />
-                        </ComboboxButton>
-                    </div>
+                    </label>
+                    {errors[item.name] && (
+                        <span className="text-xs font-dana text-red-500 absolute -bottom-5 right-0">
+                            {errors[item.name]?.message}
+                        </span>
+                    )}
+                </div>
+            ))}
 
-                    <ComboboxOptions
-                        anchor="bottom"
-                        transition
-                        className={clsx(
-                            'w-(--input-width) rounded border-2 border-background-dark/30 dark:border-white/20 dark:bg-background-secondary-dark  bg-white p-2 [--anchor-gap:--spacing(1)] empty:invisible',
-                            'transition duration-100 ease-in data-leave:data-closed:opacity-0',
-                        )}
-                    >
-                        {filteredPeople.map((person) => (
-                            <ComboboxOption
-                                key={person.id}
-                                value={person}
-                                className="group flex cursor-pointer flex-row-reverse items-center gap-2 rounded px-3 py-1.5 select-none data-focus:bg-background-dark/35 dark:data-focus:bg-white/10"
-                            >
-                                <PiCheckThin className="invisible size-4 text-secondary-dark dark:text-white group-data-selected:visible" />
-                                <div className="text-sm/6 text-secondary-dark dark:text-white">
-                                    {person.name}
-                                </div>
-                            </ComboboxOption>
-                        ))}
-                    </ComboboxOptions>
-                </Combobox>
-            </div>
+            {/* select box */}
+            <Controller
+                name="type"
+                defaultValue={filteredPeople[0]}
+                control={control}
+                render={({ field }) => (
+                    <SelectBox
+                        filteredPeople={filteredPeople}
+                        selected={field.value}
+                        setSelected={field.onChange}
+                    />
+                )}
+            />
 
             <div className="col-span-full">
-                <InputPrime
-                    type="textarea" // از نوع جدید textarea استفاده می‌کنیم
-                    name="description"
-                    placeholder="توضیحات تکمیلی"
-                />
+                <label className="w-full text-xs border-2 rounded border-gray-300 dark:border-[#5B5774] px-2 py-1 h-20 focus-within:border-main flex relative">
+                    <InputPrime
+                        type="textarea" // از نوع جدید textarea استفاده می‌کنیم
+                        placeholder="توضیحات تکمیلی"
+                        {...register('description')}
+                    />
+                </label>
             </div>
             <Button
                 type="submit"

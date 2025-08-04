@@ -1,13 +1,12 @@
 import { Dialog, DialogPanel, DialogTitle } from '@headlessui/react'
 import Button from './buttons/Button'
 import { useState } from 'react'
+import { getJalaliDate } from '../../logics/getJalaiDate'
 
 type UserCardType = { username: string; createAt: string; email: string; role: string }
 
 export default function UserCard({ username, createAt, email, role }: UserCardType) {
-    const date = new Date(createAt)
-
-    const shamsiDate = new Intl.DateTimeFormat('fa-IR').format(date)
+    const shamsiDate = getJalaliDate(createAt)
 
     const [isOpen, setIsOpen] = useState(false)
 

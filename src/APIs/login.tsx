@@ -1,4 +1,4 @@
-import type { formData } from '../types/types'
+import type { formData } from '../typesAndConsts/types'
 import { instance } from './services'
 
 export const loginService = async (userInfo: formData) => {

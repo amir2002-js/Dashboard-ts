@@ -18,7 +18,7 @@ export type RegisterResponse = {
 }
 
 export type Customer = {
-    ID:number
+    ID: number
     firstName: string
     lastName: string
     type: number
@@ -40,5 +40,23 @@ export type User = {
 }
 
 export type refreshTokenType = {
-    accessToken : string
+    accessToken: string
 }
+
+export type customerType = {
+    ID?: number
+    type: string
+    firstName: string
+    lastName: string
+    phoneNumber: string
+    totality: string
+    weight: string
+    description: string
+    CreatedAt?: string
+}
+
+export type responseCustomerType = {
+    customer: customerType
+}
+
+export type CustomerTypeSearch = 'debtor' | 'creditor'

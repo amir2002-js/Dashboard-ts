@@ -1,9 +1,23 @@
 import { Dialog, DialogPanel, DialogTitle } from '@headlessui/react'
 import Button from './buttons/Button'
 import { useState } from 'react'
+import type { customerType } from '../../typesAndConsts/types'
+import { getNameByIdInfilteredPeople } from '../../logics/funcs'
+import { getJalaliDate } from '../../logics/getJalaiDate'
 
-export default function Card({username , createAt}) {
+export default function Card({
+    type,
+    firstName,
+    lastName,
+    phoneNumber,
+    totality,
+    weight,
+    description,
+    CreatedAt,
+}: customerType) {
     const [isOpen, setIsOpen] = useState(false)
+    const strType = getNameByIdInfilteredPeople(Number(type))
+    const dateJalali = getJalaliDate(CreatedAt as string)
 
     function open() {
         setIsOpen(true)
@@ -16,35 +30,24 @@ export default function Card({username , createAt}) {
     return (
         <>
             <div
-                className=" bg-background-secondary-light hover:-translate-y-2 rounded-lg transition-all duration-300 flex flex-col items-stretch justify-stretch dark:bg-background-secondary-dark max-w-80 min-w-60 p-4 shadow-lg"
+                className="bg-background-secondary-light hover:-translate-y-2 rounded-lg transition-all duration-300 flex flex-col items-stretch justify-stretch dark:bg-background-secondary-dark max-w-80 min-w-60 p-4 shadow-lg"
                 dir="rtl"
             >
                 <table>
                     <tbody className="*:*:p-3">
                         <tr className="m-4">
                             <td className="text-[10px] ml-5">اسم : </td>
-                            <td className="font-dana">{username}</td>
+                            <td className="font-dana">{firstName + ' ' + lastName}</td>
                         </tr>
 
                         <tr className="m-4">
                             <td className="text-[10px] ml-5">تاریخ : </td>
-                            <td className="font-dana">{createAt}</td>
+                            <td className="font-dana">{dateJalali}</td>
                         </tr>
 
                         <tr className="m-4">
-                            <td className="text-[10px] ml-5">مبلغ : </td>
-                            <td className="font-dana">{} تومان</td>
-                        </tr>
-
-                        <tr className="m-4">
-                            <td className="text-[10px] ml-5">طلای برده : </td>
-                            <td className="font-dana">{} گرم</td>
-                        </tr>
-
-                        <tr className="m-4">
-                            <td className="text-[10px] ml-5"> مانده : </td>
-                            <td className="font-dana">{} تومان</td>
-                            
+                            <td className="text-[10px] ml-5">نوع حساب : </td>
+                            <td className="font-dana">{strType}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -58,6 +61,7 @@ export default function Card({username , createAt}) {
                     />
                 </div>
             </div>
+
             <Dialog
                 open={isOpen}
                 as="div"
@@ -68,15 +72,44 @@ export default function Card({username , createAt}) {
                     <div className="flex min-h-full items-center justify-center p-5">
                         <DialogPanel
                             transition
-                            className="w-full max-w-md rounded-xl dark:bg-white/5 bg-black/20 p-6 backdrop-blur-2xl duration-300 ease-out data-closed:transform-[scale(95%)] data-closed:opacity-0"
+                            className="w-full max-w-md py-10 flex flex-col justify-center items-stretch gap-10 rounded-xl dark:bg-white/5 bg-black/20 p-6 backdrop-blur-2xl duration-300 ease-out data-closed:transform-[scale(95%)] data-closed:opacity-0"
                         >
-                            <DialogTitle as="h3" className="text-base/7 font-medium text-white">
-                                Payment successful
+                            <DialogTitle
+                                as="h3"
+                                className="text-base/7 font-medium text-center text-white"
+                            >
+                                اطلاعات مشتری
                             </DialogTitle>
-                            <p className="mt-2 text-sm/6 text-white/50">
-                                Your payment has been successfully submitted. We’ve sent you an
-                                email with all of the details of your order.
-                            </p>
+                            <section
+                                className="mt-2 text-sm/6 text-white/50 *:flex *:justify-between *:items-center"
+                                dir="rtl"
+                            >
+                                <div className="">
+                                    <span>اطلاعات تماس: </span>
+                                    <span>{phoneNumber}</span>
+                                </div>
+
+                                <div className="">
+                                    <span className="">مبلغ : </span>
+                                    <span className="">{totality} تومان</span>
+                                </div>
+
+                                <div className="">
+                                    <span className="">طلای برده : </span>
+                                    <span className="">{weight} گرم</span>
+                                </div>
+
+                                <div className="">
+                                    <span className=""> مانده : </span>
+                                    <span className="">{} تومان</span>
+                                </div>
+                                {description && (
+                                    <div className="">
+                                        <span> توضیحات تکمیلی: </span>
+                                        <span>{description}</span>
+                                    </div>
+                                )}
+                            </section>
                             <div className="mt-4">
                                 <Button
                                     color="primary"
