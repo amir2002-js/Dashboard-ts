@@ -49,8 +49,8 @@ export type customerType = {
     firstName: string
     lastName: string
     phoneNumber: string
-    totality: string
-    weight: string
+    totality: number
+    weight: number
     description: string
     CreatedAt?: string
 }

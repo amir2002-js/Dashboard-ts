@@ -27,10 +27,10 @@ type ApiError = {
     error: string
 }
 
-export function useRegister(): UseMutationResult<RegisterResponse, Error, formData> {
+export function useRegister(): UseMutationResult<RegisterResponse, AxiosError<ApiError>, formData> {
     const setUser = useStoreHook((state) => state.setUser)
 
-    const mutation = useMutation<RegisterResponse, Error, formData>({
+    const mutation = useMutation<RegisterResponse, AxiosError<ApiError>, formData>({
         mutationFn: (userInfo: formData) => registerService(userInfo),
         onSuccess: (data) => {
             successFunc(data)
@@ -53,7 +53,7 @@ export function useLogin(): UseMutationResult<RegisterResponse, Error, formData>
     const setUser = useStoreHook((state) => state.setUser)
     const navigation = useNavigate()
 
-    const mutation = useMutation<RegisterResponse, Error, formData>({
+    const mutation = useMutation<RegisterResponse, AxiosError<ApiError>, formData>({
         mutationFn: (userInfo: formData) => loginService(userInfo),
         onSuccess: (data) => {
             successFunc(data)
