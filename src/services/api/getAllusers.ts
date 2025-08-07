@@ -1,5 +1,5 @@
-import { getAccessToken } from '../cookies/manage'
-import { instance } from './services'
+import { getAccessToken } from '../../cookies/manage'
+import { instance } from '../services'
 
 export const getAlluserService = async () => {
     const response = await instance.get('admin/users', {

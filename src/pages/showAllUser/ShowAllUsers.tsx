@@ -3,15 +3,25 @@ import { useGetUsers } from '../../hooks/query/queries'
 import { useEffect } from 'react'
 
 export default function ShowAllUsers() {
-    const users = useGetUsers()
+    const { data, isError, isLoading, error } = useGetUsers()
 
     useEffect(() => {
-        console.log(users.failureReason?.response)
-        console.log(users.data)
+        console.log(data, isError)
     })
+
+    if (isError) {
+        if (error.response?.status === 403) {
+            return <div className="mt-4">شما اجازه دسترسی به این بخش را ندارید.</div>
+        }
+        return <div className="mt-4">خطایی رخ داده است.</div>
+    }
+
+    if (isLoading) {
+        return <div className="mt-4">درحال دریافت اطلاعات ....</div>
+    }
     return (
         <div className="mt-4 pb-4 justify-center items-center justify-items-center *:grow grid grid-cols-2 max-md:grid-cols-1 gap-7">
-            {users.data?.map((item) => (
+            {data?.map((item) => (
                 <UserCard
                     key={item.ID}
                     username={item.username}

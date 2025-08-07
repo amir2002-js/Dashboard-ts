@@ -16,9 +16,9 @@ export default function Header() {
     }, [isDark])
 
     return (
-        <div className="flex px-4 inset-x-0 bg-background-light dark:bg-background-dark justify-between items-center py-6 fixed top-0 z-[9999999]">
+        <div className="flex px-4 inset-x-0 shadow shadow/70 shadow-black/10 bg-background-light dark:bg-background-dark justify-between items-center py-6 fixed top-0 z-[9999999]">
             <div className="">
-                <button className="lg:hidden" onClick={toggle}>
+                <button className="lg:hidden" onClick={toggle} type="button">
                     <PiDotsThreeOutlineVerticalThin className="text-3xl" />
                 </button>
             </div>

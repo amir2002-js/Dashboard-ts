@@ -1,7 +1,7 @@
 import { Dialog, DialogPanel, DialogTitle } from '@headlessui/react'
 import Button from './buttons/Button'
 import { useState } from 'react'
-import { getJalaliDate } from '../../logics/getJalaiDate'
+import { getJalaliDate } from '../../logics/funcs'
 
 type UserCardType = { username: string; createAt: string; email: string; role: string }
 

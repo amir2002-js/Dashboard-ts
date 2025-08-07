@@ -26,6 +26,7 @@ export type Customer = {
     totality: number
     phoneNumber: string
     description: string
+    status: number
 }
 
 // تایپ آپدیت شده و نهایی برای User
@@ -53,6 +54,19 @@ export type customerType = {
     weight: number
     description: string
     CreatedAt?: string
+    remainingAmount?: number
+    payment?: paymentType[]
+}
+
+export type paymentType = {
+    amount: number
+    CustomerId?: string
+}
+
+export type paymentTypeResponse = {
+    amount: number
+    CustomerId: string
+    CreateAt: string
 }
 
 export type responseCustomerType = {

@@ -1,5 +1,5 @@
-import { getRefreshToken } from '../cookies/manage'
-import { instance } from './services'
+import { getRefreshToken } from '../../cookies/manage'
+import { instance } from '../services'
 
 export const refreshAccessTknService = async () => {
     const refreshToken = getRefreshToken() // نام کوکی رفرش توکن شما

@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { refreshAccessTknService } from './refreshToken'
+import { refreshAccessTknService } from './api/refreshToken'
 import { setCookie } from '../cookies/manage'
 
 export const instance = axios.create({ baseURL: 'http://localhost:3000/api' })

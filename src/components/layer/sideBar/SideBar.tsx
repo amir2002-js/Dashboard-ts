@@ -6,23 +6,24 @@ import { useEffect } from 'react'
 export default function SideBar() {
     const isShowSidebar = useStoreHook((state) => state.isShowSidebar)
     const toggleIsShow = useStoreHook((state) => state.toggleIsShow)
+    const closeSidebar = useStoreHook((state) => state.closeSidebar)
     const { pathname } = useLocation()
 
     const dataSidebar = [
-        { title: 'مشتری ها(خرید)', id: 0, url: '/debtor' },
-        { title: 'مشتری ها(فروش)', id: 1, url: '/creditor' },
-        { title: 'اضافه کردن مشتری', id: 2, url: '/add-new-customer' },
-        { title: 'مشاهده کاربران', id: 3, url: '/users' },
+        { title: 'مشتری ها(خرید)', id: 0, url: '/dashboard/debtor' },
+        { title: 'مشتری ها(فروش)', id: 1, url: '/dashboard/creditor' },
+        { title: 'اضافه کردن مشتری', id: 2, url: '/dashboard/add-new-customer' },
+        { title: 'مشاهده کاربران', id: 3, url: '/dashboard/users' },
     ]
 
     useEffect(() => {
-        toggleIsShow()
+        closeSidebar()
     }, [pathname])
 
     return (
         <div
-            className={`fixed top-0 left-0 min-w-72 lg:max-w-40 h-screen flex flex-col z-[9999999999] max-lg:fixed max-lg:inset-0
-                ${isShowSidebar ? 'max-lg:opacity-100 max-lg:z-[9999999999]' : 'max-lg:opacity-0 max-lg:-z-[9999999999] '} bg-black/30 max-lg:w-full transition-all duration-300 `}
+            className={`fixed top-0 shadow left-0 min-w-72 lg:max-w-40 w-full overflow-x-hidden overflow-y-auto h-screen flex flex-col z-[9999999999] max-lg:fixed max-lg:inset-0
+                ${isShowSidebar ? 'max-lg:opacity-100 max-lg:z-[9999999999]' : 'max-lg:opacity-0 max-lg:-z-[9999999999] '} max-lg:w-full transition-all duration-300 `}
             onClick={(e) => {
                 e.stopPropagation()
                 toggleIsShow()

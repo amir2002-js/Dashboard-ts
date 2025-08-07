@@ -4,11 +4,13 @@ import {
     type UseMutationResult,
     type UseQueryResult,
 } from '@tanstack/react-query'
-import { registerService } from '../../APIs/register'
+import { registerService } from '../../services/api/register'
 import type {
     customerType,
     CustomerTypeSearch,
     formData,
+    paymentType,
+    paymentTypeResponse,
     RegisterResponse,
     responseCustomerType,
     User,
@@ -17,11 +19,13 @@ import { toast } from 'sonner'
 import { successFunc } from './funcQuery'
 import { AxiosError } from 'axios'
 import { useStoreHook } from '../store/stateManagement'
-import { getAlluserService } from '../../APIs/getAllusers'
-import { loginService } from '../../APIs/login'
+import { getAlluserService } from '../../services/api/getAllusers'
+import { loginService } from '../../services/api/login'
 import { useNavigate } from 'react-router-dom'
-import { addCustomerService } from '../../APIs/addCustomer'
-import { getCustomerByType } from '../../APIs/getCustomerByType'
+import { addCustomerService } from '../../services/api/addCustomer'
+import { getCustomerByType } from '../../services/api/getCustomerByType'
+import { getCustomerById } from '../../services/api/getCustomerById'
+import { postPaymentService } from '../../services/api/postPaymentService'
 
 type ApiError = {
     error: string
@@ -29,12 +33,14 @@ type ApiError = {
 
 export function useRegister(): UseMutationResult<RegisterResponse, AxiosError<ApiError>, formData> {
     const setUser = useStoreHook((state) => state.setUser)
+    const navigation = useNavigate()
 
     const mutation = useMutation<RegisterResponse, AxiosError<ApiError>, formData>({
         mutationFn: (userInfo: formData) => registerService(userInfo),
         onSuccess: (data) => {
             successFunc(data)
             setUser(data.user)
+            navigation('/dashboard/debtor')
         },
         onError: (error: AxiosError<ApiError>) => {
             console.log('error', error.response?.data.error)
@@ -77,6 +83,15 @@ export function useGetUsers(): UseQueryResult<User[], AxiosError<ApiError>> {
     const query = useQuery<User[], AxiosError<ApiError>>({
         queryFn: getAlluserService,
         queryKey: ['users'],
+
+        retry: (failureCount, error) => {
+            // اگر خطا از نوع 403 (عدم دسترسی) یا 401 (عدم احراز هویت) بود، دیگر تلاش نکن
+            if (error.response?.status === 403 || error.response?.status === 401) {
+                return false
+            }
+
+            return failureCount < 2
+        },
     })
 
     return query
@@ -107,4 +122,27 @@ export function useGetCustomerByType(
     })
 
     return query
+}
+
+export function useGetCustomerById(
+    customerId: number | string,
+): UseQueryResult<customerType, Error> {
+    const query = useQuery<customerType, AxiosError<ApiError>>({
+        queryKey: ['customer', Number(customerId)],
+        queryFn: async () => getCustomerById(customerId),
+        enabled: !!customerId,
+    })
+
+    return query
+}
+
+export function usePostPayment(
+    customerId: number,
+): UseMutationResult<paymentTypeResponse, Error, paymentType> {
+    const mutation = useMutation<paymentTypeResponse, Error, paymentType>({
+        mutationFn: (data: paymentType) => postPaymentService(data, customerId),
+        mutationKey: ['payment', Number(customerId)],
+    })
+
+    return mutation
 }
