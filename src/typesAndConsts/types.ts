@@ -46,7 +46,8 @@ export type refreshTokenType = {
 
 export type customerType = {
     ID?: number
-    type: string
+    customerType: number
+    accountType: number
     firstName: string
     lastName: string
     phoneNumber: string
@@ -60,13 +61,14 @@ export type customerType = {
 
 export type paymentType = {
     amount: number
-    CustomerId?: string
+    ID?: number
+    CreatedAt?: string
 }
 
 export type paymentTypeResponse = {
     amount: number
-    CustomerId: string
-    CreateAt: string
+    ID: number
+    CreatedAt: string
 }
 
 export type responseCustomerType = {

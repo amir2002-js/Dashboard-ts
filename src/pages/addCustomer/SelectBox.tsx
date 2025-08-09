@@ -12,14 +12,12 @@ type SelectBoxType = {
     filteredPeople: {
         id: number
         name: string
-        typeCustomer: string
     }[]
     selected: {
         id: number
         name: string
-        typeCustomer: string
     }
-    setSelected: (v: { id: number; name: string; typeCustomer: string }) => void
+    setSelected: (v: { id: number; name: string }) => void
 }
 
 export default function SelectBox({ selected, setSelected, filteredPeople }: SelectBoxType) {

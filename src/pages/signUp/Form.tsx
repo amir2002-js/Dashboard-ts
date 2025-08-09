@@ -2,11 +2,12 @@ import Input from '../../components/ui/Input'
 import Button from '../../components/ui/buttons/Button'
 import Logo from '../../components/ui/Logo'
 import { useNavigate } from 'react-router-dom'
-import { useRegister } from '../../hooks/query/queries'
+
 import { useForm, type SubmitHandler } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { getRefreshToken } from '../../cookies/manage'
+import { useRegister } from '../../hooks/query/queries'
 
 const zodInputs = z.object({
     username: z

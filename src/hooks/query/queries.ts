@@ -26,6 +26,7 @@ import { addCustomerService } from '../../services/api/addCustomer'
 import { getCustomerByType } from '../../services/api/getCustomerByType'
 import { getCustomerById } from '../../services/api/getCustomerById'
 import { postPaymentService } from '../../services/api/postPaymentService'
+import { deletePayment } from '../../services/api/deletePayment'
 
 type ApiError = {
     error: string
@@ -137,11 +138,32 @@ export function useGetCustomerById(
 }
 
 export function usePostPayment(
-    customerId: number,
+    customerId: string | number,
 ): UseMutationResult<paymentTypeResponse, Error, paymentType> {
     const mutation = useMutation<paymentTypeResponse, Error, paymentType>({
         mutationFn: (data: paymentType) => postPaymentService(data, customerId),
         mutationKey: ['payment', Number(customerId)],
+        onError: () => {
+            toast.error('مشکلی در ارسال اطلاعات پرداخت پیش آمده است')
+        },
+        onSuccess: () => {
+            toast.success('اطلاعات با موفقیت ارسال شد')
+        },
+    })
+
+    return mutation
+}
+
+export function useDeletePayment() {
+    const mutation = useMutation({
+        mutationFn: (paymentID: string) => deletePayment(paymentID),
+        onSuccess: () => {
+            toast.success('حذف با موفقیت انجام شد')
+        },
+
+        onError: () => {
+            toast.error('عملیات حذف شکست خورد!!!!')
+        },
     })
 
     return mutation

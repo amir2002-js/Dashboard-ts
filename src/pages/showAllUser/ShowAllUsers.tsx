@@ -1,6 +1,6 @@
 import UserCard from '../../components/ui/UserCard'
-import { useGetUsers } from '../../hooks/query/queries'
 import { useEffect } from 'react'
+import { useGetUsers } from '../../hooks/query/queries'
 
 export default function ShowAllUsers() {
     const { data, isError, isLoading, error } = useGetUsers()

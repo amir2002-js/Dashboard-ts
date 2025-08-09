@@ -3,9 +3,10 @@ import Button from '../../components/ui/buttons/Button'
 import Input from '../../components/ui/Input'
 import Logo from '../../components/ui/Logo'
 import { useForm, type SubmitHandler } from 'react-hook-form'
-import { useLogin } from '../../hooks/query/queries'
+
 import z from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useLogin } from '../../hooks/query/queries'
 
 const zodInputs = z.object({
     email: z.string().email({ message: 'فرمت ایمیل صحیح نیست' }),

@@ -5,7 +5,7 @@ import { Controller, useForm, type SubmitHandler } from 'react-hook-form'
 import z from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useAddCustomer } from '../../hooks/query/queries'
-import { filteredPeople } from '../../typesAndConsts/consts'
+import { filteredAccount, filteredPeople } from '../../typesAndConsts/consts'
 
 const zodInputs = z
     .object({
@@ -19,15 +19,19 @@ const zodInputs = z
         totality: z.coerce.number('لطفاً یک عدد معتبر وارد کنید'),
         weight: z.coerce.number('لطفاً یک عدد معتبر وارد کنید'),
         description: z.string(),
-        type: z.object({
+        customerType: z.object({
             id: z.number(),
             name: z.string(),
-            typeCustomer: z.string(),
+        }),
+        accountType: z.object({
+            id: z.number(),
+            name: z.string(),
         }),
     })
     .transform((data) => ({
         ...data,
-        type: data.type.typeCustomer,
+        customerType: data.customerType.id,
+        accountType: data.accountType.id,
     }))
 
 type Inputs = z.infer<typeof zodInputs>
@@ -50,7 +54,7 @@ export default function Form() {
     const addCustomerHook = useAddCustomer()
 
     const onSubmit: SubmitHandler<Inputs> = (data) => {
-        // console.log(data)
+        console.log(data)
         addCustomerHook.mutate(data)
     }
 
@@ -79,12 +83,25 @@ export default function Form() {
 
             {/* select box */}
             <Controller
-                name="type"
+                name="customerType"
                 defaultValue={filteredPeople[0]}
                 control={control}
                 render={({ field }) => (
                     <SelectBox
                         filteredPeople={filteredPeople}
+                        selected={field.value}
+                        setSelected={field.onChange}
+                    />
+                )}
+            />
+
+            <Controller
+                name="accountType"
+                defaultValue={filteredAccount[0]}
+                control={control}
+                render={({ field }) => (
+                    <SelectBox
+                        filteredPeople={filteredAccount}
                         selected={field.value}
                         setSelected={field.onChange}
                     />
