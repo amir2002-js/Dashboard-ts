@@ -73,7 +73,7 @@
     --font-dana-bold: 'main-bold';
     --font-dana-black: 'main-black';
 
-    --spacing-laptop :1232px;
+    --spacing-laptop: 1232px;
 }
 
 @font-face {
@@ -110,6 +110,10 @@
 
     * {
         transition: all 300ms;
+    }
+
+    .text-landing {
+        @apply font-dana-bold text-4xl text-center;
     }
 }
 

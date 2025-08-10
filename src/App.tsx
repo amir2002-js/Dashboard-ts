@@ -21,7 +21,7 @@ function App() {
                         <Route element={<Login />} path="/login" />
                         <Route
                             element={
-                                <section className='font-dana text-lg' dir='rtl'>
+                                <section className="font-dana text-lg" dir="rtl">
                                     <Outlet />
                                 </section>
                             }
