@@ -1,8 +1,11 @@
+import type { JSX } from "react"
+
 type buttonType = {
-    color: 'info' | 'warning' | 'error' | 'success' | 'primary' | 'secondary'
+    color: 'info' | 'warning' | 'error' | 'success' | 'primary' | 'secondary' | 'black'
     typeBtn: 'contained' | 'outlined' | 'text'
-    text: string
+    text: string | JSX.Element
     types?: 'button' | 'reset' | 'submit'
+    size?: 'sm' | 'lg' | ''
     onClick?: () => void
 }
 export default function Button({
@@ -10,6 +13,7 @@ export default function Button({
     color,
     text,
     types = 'button',
+    size = '',
     onClick = () => {
         console.log('clicked')
     },
@@ -34,6 +38,9 @@ export default function Button({
         case 'warning':
             className += ' '
             break
+        case 'black':
+            className += ' bg-black text-white border-black'
+            break
     }
 
     switch (typeBtn) {
@@ -45,6 +52,18 @@ export default function Button({
             className = className + ' border-0 !bg-transparent'
             break
     }
+
+    switch (size) {
+        case '':
+            break
+        case 'sm':
+            className = className + ' w-[223px] h-[48px]'
+            break
+        case 'lg':
+            className = className + ' w-[296px] h-[56px] lg:text-[20px]! max-lg:w-[223px] max-lg:h-[48px]'
+            break
+    }
+
     return (
         <button
             className={`${className} py-2 px-3 rounded text-xs`}

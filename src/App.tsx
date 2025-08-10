@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { BrowserRouter, Outlet, Route, Routes } from 'react-router-dom'
 import Layout from './Layout'
 import SignUp from './pages/signUp/SignUp'
 import Login from './pages/login/Login'
@@ -7,6 +7,7 @@ import AddCustomer from './pages/addCustomer/AddCustomer'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import ShowAllUsers from './pages/showAllUser/ShowAllUsers'
 import ShowCustomer from './pages/showCustomer/ShowCustomer'
+import Landing from './pages/landing/Landing'
 
 function App() {
     const queryClient = new QueryClient()
@@ -18,8 +19,17 @@ function App() {
                     <Routes>
                         <Route element={<SignUp />} path="/sign-up" />
                         <Route element={<Login />} path="/login" />
+                        <Route
+                            element={
+                                <section className='font-dana text-lg' dir='rtl'>
+                                    <Outlet />
+                                </section>
+                            }
+                            path="/"
+                        >
+                            <Route element={<Landing />} path="" />
+                        </Route>
 
-                        {/* <Route element={<Dashboard />} path="/dashboard" /> */}
                         <Route element={<Layout />} path="/dashboard">
                             <Route element={<Dashboard />} path="debtor" />
                             <Route element={<Dashboard />} path="creditor" />

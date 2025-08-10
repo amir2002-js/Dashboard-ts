@@ -1,8 +1,9 @@
 import { useLocation } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import type { CustomerTypeSearch } from '../../typesAndConsts/types'
-import DashboardHead from './DashboardHead'
-import DashboardBody from './DashboardBody'
+import {DashboardHead} from './DashboardHead'
+import {DashboardBody} from './DashboardBody'
+
 
 export const Dashboard = () => {
     const { pathname } = useLocation()

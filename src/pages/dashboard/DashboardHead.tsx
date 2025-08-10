@@ -1,7 +1,6 @@
-import React from 'react'
 import { PiMagnifyingGlassLight } from 'react-icons/pi'
 
-export default function DashboardHead() {
+export function DashboardHead() {
     return (
         <div className="w-full h-96 mb-20 rounded-2xl overflow-hidden relative flex justify-center items-center bg-none">
             <img

@@ -2,7 +2,7 @@ import Card from '../../components/ui/Card'
 import { useGetCustomerByType } from '../../hooks/query/queries'
 import type { CustomerTypeSearch } from '../../typesAndConsts/types'
 
-export default function DashboardBody({ typeSearch }: { typeSearch: CustomerTypeSearch }) {
+export function DashboardBody({ typeSearch }: { typeSearch: CustomerTypeSearch }) {
     const { isLoading: customersLoder, data: customers } = useGetCustomerByType(typeSearch)
 
     console.log(customers)

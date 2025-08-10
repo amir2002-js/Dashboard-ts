@@ -72,6 +72,8 @@
     --font-dana-light: 'main-light';
     --font-dana-bold: 'main-bold';
     --font-dana-black: 'main-black';
+
+    --spacing-laptop :1232px;
 }
 
 @font-face {
