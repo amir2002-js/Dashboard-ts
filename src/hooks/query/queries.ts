@@ -1,6 +1,7 @@
 import {
     useMutation,
     useQuery,
+    useQueryClient,
     type UseMutationResult,
     type UseQueryResult,
 } from '@tanstack/react-query'
@@ -18,7 +19,7 @@ import type {
 import { toast } from 'sonner'
 import { successFunc } from './funcQuery'
 import { AxiosError } from 'axios'
-import { useStoreHook } from '../store/stateManagement'
+import { useManageDialog, useStoreHook } from '../store/stateManagement'
 import { getAlluserService } from '../../services/api/getAllusers'
 import { loginService } from '../../services/api/login'
 import { useNavigate } from 'react-router-dom'
@@ -27,6 +28,7 @@ import { getCustomerByType } from '../../services/api/getCustomerByType'
 import { getCustomerById } from '../../services/api/getCustomerById'
 import { postPaymentService } from '../../services/api/postPaymentService'
 import { deletePayment } from '../../services/api/deletePayment'
+import { updatePayment } from '../../services/api/updatePayment'
 
 type ApiError = {
     error: string
@@ -140,28 +142,62 @@ export function useGetCustomerById(
 export function usePostPayment(
     customerId: string | number,
 ): UseMutationResult<paymentTypeResponse, Error, paymentType> {
+    const queryClient = useQueryClient()
     const mutation = useMutation<paymentTypeResponse, Error, paymentType>({
         mutationFn: (data: paymentType) => postPaymentService(data, customerId),
         mutationKey: ['payment', Number(customerId)],
-        onError: () => {
+        onError: (error) => {
+            console.log(error)
             toast.error('مشکلی در ارسال اطلاعات پرداخت پیش آمده است')
         },
         onSuccess: () => {
             toast.success('اطلاعات با موفقیت ارسال شد')
+            queryClient.invalidateQueries({
+                queryKey: ['customer', Number(customerId)],
+            })
         },
     })
 
     return mutation
 }
 
-export function useDeletePayment() {
+export function useDeletePayment(customerId: string | number) {
+    const queryClient = useQueryClient()
     const mutation = useMutation({
         mutationFn: (paymentID: string) => deletePayment(paymentID),
         onSuccess: () => {
             toast.success('حذف با موفقیت انجام شد')
+            queryClient.invalidateQueries({
+                queryKey: ['customer', Number(customerId)],
+            })
         },
 
         onError: () => {
+            toast.error('عملیات حذف شکست خورد!!!!')
+        },
+    })
+
+    return mutation
+}
+
+export function usePutPayment(
+    customerId: string | number,
+    paymentID: string | number,
+): UseMutationResult<paymentType, Error, paymentType> {
+    const queryClient = useQueryClient()
+    const close = useManageDialog((state) => state.close)
+    const mutation = useMutation<paymentType, Error, paymentType>({
+        mutationFn: (data: paymentType) => updatePayment(paymentID, data),
+        onSuccess: () => {
+            toast.success('ویرایش با موفقیت انجام شد')
+            queryClient.invalidateQueries({
+                queryKey: ['customer', Number(customerId)],
+            })
+            close()
+        },
+
+        onError: (error) => {
+            console.log(error)
             toast.error('عملیات حذف شکست خورد!!!!')
         },
     })

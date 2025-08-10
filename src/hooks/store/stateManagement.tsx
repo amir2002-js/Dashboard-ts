@@ -23,3 +23,15 @@ export const useStoreHook = create<useStoreApi>()((set) => ({
             user: data,
         })),
 }))
+
+type manageDialog = {
+    isOpen: boolean
+    open: () => void
+    close: () => void
+}
+
+export const useManageDialog = create<manageDialog>()((set) => ({
+    isOpen: false,
+    open: () => set(() => ({ isOpen: true })),
+    close: () => set(() => ({ isOpen: false })),
+}))
