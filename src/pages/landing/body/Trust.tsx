@@ -1,4 +1,3 @@
-import React from 'react'
 import SvgN1 from './svgs/SvgN1'
 import { SvgN2 } from './svgs/SvgN2'
 import { SvgN3 } from './svgs/SvgN3'

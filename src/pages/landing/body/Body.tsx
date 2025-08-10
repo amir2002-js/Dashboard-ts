@@ -1,4 +1,6 @@
+import { Comments } from './comments/Comments'
 import { Companies } from './Companies'
+import { Evolve } from './Evolve'
 import { Features } from './Features'
 import Trust from './Trust'
 
@@ -8,6 +10,8 @@ export default function Body() {
             <Trust />
             <Companies />
             <Features />
+            <Evolve />
+            <Comments />
         </div>
     )
 }

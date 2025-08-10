@@ -13,7 +13,7 @@ export const Companies = () => {
             />
 
             {/* buttons */}
-            <div className="flex gap-7 justify-center items-center flex-row-reverse">
+            <div className="flex flex-wrap gap-7 justify-center items-center flex-row-reverse">
                 <Button
                     color="black"
                     size="sm"

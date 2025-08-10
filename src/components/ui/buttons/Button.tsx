@@ -60,12 +60,12 @@ export default function Button({
             break
         case 'sm':
             className =
-                className +
-                ' w-[223px] h-[48px] max-lg:text-[14px] max-lg:w-[168px] max-lg:h-[41px]'
+                className + ' w-[223px] h-[48px] lg:text-[14px] max-lg:w-[168px] max-lg:h-[41px]'
             break
         case 'lg':
             className =
-                className + ' w-[296px] h-[56px] lg:text-[20px]! max-lg:w-[223px] max-lg:h-[48px]'
+                className +
+                ' w-[296px] h-[56px] lg:text-[20px]! text-[16px]! max-lg:w-[223px] max-lg:h-[48px]'
             break
     }
 

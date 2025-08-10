@@ -38,10 +38,10 @@ export const Features = () => {
                     pPar="استخدام خود را با ابزارهای قدرتمند برای جستجو، عملکرد، کارایی و دیده شدن بهینه کنید"
                 />
 
-                <div className="flex justify-center items-center gap-4 flex-wrap">
+                <div className="flex justify-center items-center gap-x-3 gap-y-6 flex-wrap">
                     {dataBox.map((item) => (
                         <div
-                            className="flex hover:cursor-pointer hover:-translate-y-3.5 shadow shadow-black shadow/25 w-[296px] flex-wrap flex-col gap-8 justify-center items-center *:text-center border rounded-2xl border-gray-200 p-4"
+                            className="flex hover:cursor-pointer hover:-translate-y-3.5 shadow shadow-black shadow/25 max-w-[296px] flex-wrap flex-col gap-8 justify-center items-center *:text-center border rounded-2xl border-gray-200 p-4"
                             key={item.id}
                         >
                             <div className="">{item.icon}</div>
