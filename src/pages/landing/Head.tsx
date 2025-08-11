@@ -2,7 +2,7 @@ import Button from '../../components/ui/buttons/Button'
 
 export function Head() {
     return (
-        <div className="bg-gray-200 p-5 h-fit pt-[264px]">
+        <div className="bg-gray-200 p-5 h-fit pt-[150px]">
             <div className="max-w-laptop w-full max-md:flex-col-reverse mx-auto h-fit flex xl:gap-[148px] gap-24 justify-center items-stretch">
                 {/* text */}
                 <div className="flex flex-col shrink gap-9 max-md:justify-center max-md:items-center md:max-w-[504px] py-[63px] max-md:pt-0">

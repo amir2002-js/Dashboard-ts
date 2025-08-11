@@ -6,6 +6,7 @@ type buttonType = {
     text: string | JSX.Element
     types?: 'button' | 'reset' | 'submit'
     size?: 'sm' | 'lg' | ''
+    classNameProps?: string
     onClick?: () => void
 }
 export default function Button({
@@ -14,6 +15,7 @@ export default function Button({
     text,
     types = 'button',
     size = '',
+    classNameProps = '',
     onClick = () => {
         console.log('clicked')
     },
@@ -71,7 +73,7 @@ export default function Button({
 
     return (
         <button
-            className={`${className} py-2 px-3 rounded text-xs`}
+            className={`${className} py-2 px-3 rounded text-xs ${classNameProps} `}
             type={types}
             onClick={() => onClick()}
         >

@@ -7,6 +7,7 @@ import {
     PiWhatsappLogoDuotone,
 } from 'react-icons/pi'
 import Logo from '../../../components/ui/Logo'
+import { Link } from 'react-router-dom'
 
 export const MainFooter = () => {
     return (
@@ -24,11 +25,21 @@ export const MainFooter = () => {
                 <div className="flex flex-col gap-6">
                     <h2 className="text-2xl font-dana-bold">لینک ها</h2>
                     <ul className="flex gap-3 flex-col text-xs">
-                        <li>خانه</li>
-                        <li>درباره ما</li>
-                        <li>ورود</li>
-                        <li>ثبت نام</li>
-                        <li>داشبورد</li>
+                        <li>
+                            <Link to={'/'}>خانه</Link>
+                        </li>
+                        <li>
+                            <Link to={'/about-us'}>درباره ما</Link>
+                        </li>
+                        <li>
+                            <Link to={'/login'}>ورود</Link>
+                        </li>
+                        <li>
+                            <Link to={'/sign-up'}>ثبت نام</Link>
+                        </li>
+                        <li>
+                            <Link to={'/dashboard'}>داشبورد</Link>
+                        </li>
                     </ul>
                 </div>
 
