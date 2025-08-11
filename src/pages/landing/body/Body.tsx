@@ -6,7 +6,7 @@ import Trust from './Trust'
 
 export default function Body() {
     return (
-        <div className="p-5 flex flex-col justify-center items-center gap-[88px]">
+        <div className="p-6 flex flex-col justify-center items-center gap-[88px]">
             <Trust />
             <Companies />
             <Features />
