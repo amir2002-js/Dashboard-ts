@@ -8,6 +8,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import ShowAllUsers from './pages/showAllUser/ShowAllUsers'
 import ShowCustomer from './pages/showCustomer/ShowCustomer'
 import Landing from './pages/landing/Landing'
+import NotFount from './pages/notFound/NotFount'
 
 function App() {
     const queryClient = new QueryClient()
@@ -37,6 +38,8 @@ function App() {
                             <Route element={<ShowAllUsers />} path="users" />
                             <Route element={<ShowCustomer />} path="customers/:id" />
                         </Route>
+
+                        <Route path="*" element={<NotFount />} />
                     </Routes>
                 </BrowserRouter>
             </div>

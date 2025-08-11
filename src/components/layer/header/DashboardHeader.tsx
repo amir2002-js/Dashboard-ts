@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { PiDotsThreeOutlineVerticalThin, PiMoonThin, PiSunThin } from 'react-icons/pi'
 import { useStoreHook } from '../../../hooks/store/stateManagement'
 
-export default function Header() {
+export default function DashboardHeader() {
     const [isDark, setIsDark] = useState(false)
 
     const toggle = useStoreHook((s) => s.toggleIsShow)
