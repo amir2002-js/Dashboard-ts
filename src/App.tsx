@@ -15,7 +15,7 @@ function App() {
 
     return (
         <QueryClientProvider client={queryClient}>
-            <div className="select-none" onContextMenu={() => {}}>
+            <div className="select-none font-dana" onContextMenu={() => {}}>
                 <BrowserRouter>
                     <Routes>
                         <Route element={<SignUp />} path="/sign-up" />
